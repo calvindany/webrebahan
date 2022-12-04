@@ -1,0 +1,35 @@
+    <%- include('include/header.ejs') %>
+        <link rel="stylesheet" href="/css/adminRoot.css">
+    </head>
+        <%- include('include/navigation.ejs') %>
+
+        <section class="row custom-padding">
+            <h3 class="my-4">Tambah Paket Perjalanan</h3>
+        </section>
+
+        <form class="custom-padding">
+            <div class="mb-3">
+                <label for="namapaket" class="form-label">Nama Paket</label>
+                <input type="text" class="form-control" id="namapaket" aria-describedby="emailHelp">            </div>
+            <div class="mb-3">
+                <label for="harga" class="form-label">Harga</label>
+                <input type="number" class="form-control" id="harga">
+            </div>
+            <div class="mb-3">
+                <label for="Durasi Wisata" class="form-label">Durasi Wisata</label>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="col-2 me-4 d-flex align-items-center">
+                        <input type="number" class="form-control" id="hari" placeholder="Jumlah Hari">
+                        <label class="mx-3" for="hari">Hari</label>
+                    </div>
+                    <div class="col-2 d-flex align-items-center">
+                        <input type="number" class="form-control" id="malam" placeholder="Jumlah Malam">
+                        <label for="malam" class="mx-3">Malam</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+        <%- include('include/footer.ejs') %>

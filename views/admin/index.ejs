@@ -1,0 +1,26 @@
+        <%- include('include/header.ejs') %>
+        <link rel="stylesheet" href="/css/adminRoot.css">
+    </head>
+
+    <body>
+        <%- include('include/navigation.ejs') %>
+        <section class="row custom-padding">
+            <h3 class="my-4">Paket Perjalanan</h3>
+        </section>
+        
+        <section class="row d-flex justify-content-end custom-padding">
+            <button type="button" class="btn btn-primary col-1 ">Tambah</button>
+        </section>
+
+        <section class="custom-padding">
+            <table class="table table-sm">
+                <tr>
+                    <th>Id</th>
+                    <th>Nama Paket</th>
+                    <th>Harga</th>
+                    <th>Durasi Perjalanan</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+        </section>
+        <%- include('include/footer.ejs') %>
