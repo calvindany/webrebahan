@@ -7,23 +7,23 @@
             <h3 class="my-4">Tambah Paket Perjalanan</h3>
         </section>
 
-        <form class="custom-padding">
+        <form class="custom-padding" method="POST" action="/admin/tambahpaketwisata">
             <div class="mb-3">
                 <label for="namapaket" class="form-label">Nama Paket</label>
-                <input type="text" class="form-control" id="namapaket" aria-describedby="emailHelp">            </div>
+                <input type="text" class="form-control" name="namapaket" aria-describedby="emailHelp">            </div>
             <div class="mb-3">
                 <label for="harga" class="form-label">Harga</label>
-                <input type="number" class="form-control" id="harga">
+                <input type="number" class="form-control" name="harga">
             </div>
             <div class="mb-3">
                 <label for="Durasi Wisata" class="form-label">Durasi Wisata</label>
                 <div class="d-flex justify-content-start align-items-center">
                     <div class="col-2 me-4 d-flex align-items-center">
-                        <input type="number" class="form-control" id="hari" placeholder="Jumlah Hari">
+                        <input type="number" class="form-control" name="hari" placeholder="Jumlah Hari">
                         <label class="mx-3" for="hari">Hari</label>
                     </div>
                     <div class="col-2 d-flex align-items-center">
-                        <input type="number" class="form-control" id="malam" placeholder="Jumlah Malam">
+                        <input type="number" class="form-control" name="malam" placeholder="Jumlah Malam">
                         <label for="malam" class="mx-3">Malam</label>
                     </div>
                 </div>
