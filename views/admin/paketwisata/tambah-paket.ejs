@@ -1,7 +1,7 @@
-    <%- include('include/header.ejs') %>
+    <%- include('../include/header.ejs') %>
         <link rel="stylesheet" href="/css/adminRoot.css">
     </head>
-        <%- include('include/navigation.ejs') %>
+        <%- include('../include/navigation.ejs') %>
 
         <section class="row custom-padding">
             <h3 class="my-4">Tambah Paket Perjalanan</h3>
@@ -10,7 +10,8 @@
         <form class="custom-padding" method="POST" action="/admin/tambahpaketwisata">
             <div class="mb-3">
                 <label for="namapaket" class="form-label">Nama Paket</label>
-                <input type="text" class="form-control" name="namapaket" aria-describedby="emailHelp">            </div>
+                <input type="text" class="form-control" name="namapaket" aria-describedby="emailHelp">
+            </div>
             <div class="mb-3">
                 <label for="harga" class="form-label">Harga</label>
                 <input type="number" class="form-control" name="harga">
@@ -32,4 +33,4 @@
         </form>
 
 
-        <%- include('include/footer.ejs') %>
+        <%- include('../include/footer.ejs') %>
