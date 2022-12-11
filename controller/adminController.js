@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const PaketWisata = require('../model/paket_wisata');
+const SewaMobil = require('../model/sewa_mobil');
+
 
 /* ************PAKET WISATA************ */
 
@@ -88,86 +90,83 @@ exports.postHapusPaketWisata = (req, res, next) => {
 
 /* ************SEWA MOBIL************ */
 
-exports.getIndex = (req, res, next) => {
-    res.render('admin/sewamobil/sewa-mobil')
-    // PaketWisata.find()
-    // .then( (paket) => {
-    //     return res.render('admin/sewamobil/sewa-mobil', {
-    //         paket : paket
-    //     });
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // })
+exports.getSewaMobil = (req, res, next) => {
+    SewaMobil.find()
+    .then( (mobil) => {
+        return res.render('admin/sewamobil/sewa-mobil', {
+            mobil : mobil
+        });
+    })
+    .catch(err => {
+        console.log(err);
+    })
 };
 
-// exports.getTambahPaketWisata = (req, res, next) => {
-//     return res.render('admin/paketwisata/tambah-paket')
-// }
+exports.getTambahSewaMobil = (req, res, next) => {
+    res.render('admin/sewamobil/tambah-mobil');
+}
 
-// exports.postTambahPaketWisata = (req, res, next) => {
-//     const nama = req.body.namapaket;
-//     const harga = req.body.harga;
-//     const durasi = req.body.hari + " Hari " + req.body.malam + " Malam";
-//     const paketWisata = new PaketWisata({
-//         nama : nama,
-//         harga : harga,
-//         durasi : durasi
-//     });
+exports.postTambahSewaMobil = (req, res, next) => {
+    const namaMobil = req.body.namamobil;
+    const harga = req.body.harga;
+    const kapasitas = req.body.kapasitas;
+    const driver = req.body.driver;
 
-//     paketWisata.save()
-//     .then( result => {
-//         console.log('Data Berhasil di Input');
-//         return res.redirect('/admin');
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     })
-// }
+    const sewaMobil = new SewaMobil({
+        mobil : namaMobil,
+        harga : harga,
+        kapasitas : kapasitas,
+        driver : driver
+    });
 
-// exports.getEditPaketWisata = (req, res, next) => {
-//     const selectedPaketWisataId = req.params.idpaketwisata;
-    
-//     console.log(selectedPaketWisataId)
-//     PaketWisata.findById({_id : selectedPaketWisataId})
-//     .then( paketwisata => {
-//         res.render('admin/paketwisata/edit-paket', {
-//             paketData : paketwisata
-//         })
-//         console.log(paketwisata);
-//     })
-// }
+    return sewaMobil.save()
+    .then( result => {
+        console.log('Data telah ditambahan');
+        res.redirect('/admin/sewamobil')
+    })
+    .catch( err => {
+        console.log(err);
+    })
+}
 
-// exports.postEditPaketWisata = (req, res, next) => {
-//     const updatedNama = req.body.namapaket;
-//     const updatedHarga = req.body.harga;
-//     const updatedDurasi = req.body.hari + " Hari " + req.body.malam + " Malam";
-//     const selectedPaketWisataId = req.body.idpaket;
-//     // console.log(selectedPaketWisataId);
-//     PaketWisata.findOne({_id : selectedPaketWisataId})
-//     .then( paketWisata => {
-//         paketWisata.nama = updatedNama;
-//         paketWisata.harga = updatedHarga;
-//         paketWisata.durasi = updatedDurasi;
+exports.getEditMobil = (req, res, next) => {
+    const selectedMobilId = req.params.idmobil;
 
-//         paketWisata.save();
-//         return res.redirect('/admin')
-//     })
-//     .catch( err => {
-//         console.log(err);
-//     })
-// }
+    return SewaMobil.findOne({ _id : selectedMobilId})
+    .then ( mobil => {
+      res.render('admin/sewamobil/edit-mobil', {
+        mobil : mobil
+      })  
+    })
+}
 
-// exports.postHapusPaketWisata = (req, res, next) => {
-//     const selectedPaketWisata = req.body.paketid;
-//     PaketWisata.findByIdAndRemove(selectedPaketWisata)
-//     .then(result => {
-//         console.log("Data berhasil di hapus");
-//         return res.redirect('/admin')
-//     })
-//     .catch( err => {
-//         console.log(err);
-//     });
-// }
+exports.postEditMobil = (req, res, next) => {
+    const updatedMobil = req.body.namamobil;
+    const updatedHarga = req.body.harga;
+    const updatedKapasitas = req.body.kapasitas;
+    const updatedDriver = req.body.driver;
+
+    const selectedMobilId = req.body.idmobil;
+
+    SewaMobil.findOne({ _id : selectedMobilId})
+    .then( mobil => {
+        mobil.mobil = updatedMobil,
+        mobil.harga = updatedHarga,
+        mobil.kapasitas = updatedKapasitas,
+        mobil.driver = updatedDriver
+
+        mobil.save();
+        return res.redirect('/admin/sewamobil')
+    })
+}
+
+exports.postHapusMobil = (req, res, next) => {
+    const selectedIdMobil = req.body.idmobil;
+    SewaMobil.findByIdAndDelete(selectedIdMobil)
+    .then( result => {
+        return res.redirect('/admin/sewamobil');
+    })
+}
+
 
 /* ************ SELESAI PAKET WISATA************ */

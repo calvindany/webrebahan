@@ -9,32 +9,34 @@
         </section>
         
         <section class="row d-flex justify-content-end custom-padding mb-4">
-            <a type="button" class="btn btn-primary col-1" href="/admin/tambahpaketwisata">Tambah</a>
+            <a type="button" class="btn btn-primary col-1" href="/admin/tambahsewamobil">Tambah</a>
         </section>
 
         <section class="custom-padding">
             <table class="table table-md">
                 <tr>
-                    <th class="col-xl-4">Nama Paket</th>
+                    <th class="col-xl-4">Mobil</th>
                     <th class="col-xl-2">Harga</th>
-                    <th class="col-xl-2">Durasi Perjalanan</th>
+                    <th class="col-xl-2">Kapasitas</th>
+                    <th class="col-xl-2">Driver</th>
                     <th class="col-xl-2 text-center">Action</th>
                 </tr>
 
-                <!-- <% for(let i = 0; i < paket.length; i++){ %>
+                <% for(let i = 0; i < mobil.length; i++){ %>
                     <tr>
-                        <td><%= paket[i].nama %></td>
-                        <td><%= paket[i].harga %></td>
-                        <td><%= paket[i].durasi %></td>
+                        <td><%= mobil[i].mobil %></td>
+                        <td><%= mobil[i].harga %></td>
+                        <td><%= mobil[i].kapasitas %></td>
+                        <td><%= mobil[i].driver %></td>
                         <td class="d-flex justify-content-center">
-                            <a href="/admin/editpaketwisata/<%= paket[i]._id %>" class="btn"><i class="bi bi-pencil-square fs-3" style="color: blue;"></i></a>
-                            <form action="/admin/hapuspaketwisata" method="POST" >
-                                <input type="hidden" name="paketid" value="<%= paket[i]._id %>">
+                            <a href="/admin/editmobil/<%= mobil[i]._id %>" class="btn"><i class="bi bi-pencil-square fs-3" style="color: blue;"></i></a>
+                            <form action="/admin/hapusmobil" method="POST" >
+                                <input type="hidden" name="idmobil" value="<%= mobil[i]._id %>">
                                 <button type="submit" class="btn"><i class="bi bi-trash fs-3" style="color: red"></i></button>
                             </form>
                         </td>
                     </tr>
-                <% } %> -->
+                <% } %>
             </table>
         </section>
         <%- include('../include/footer.ejs') %>
