@@ -20,6 +20,7 @@ router.get('/tambahsewamobil', adminController.getTambahSewaMobil);
 router.post('/tambahsewamobil', adminController.postTambahSewaMobil);
 
 router.get('/editmobil/:idmobil', adminController.getEditMobil);
+router.post('/editmobil/deletegambarmobil/:idmobil', adminController.postHapusGambarMobil);
 router.post('/editmobil', adminController.postEditMobil);
 
 router.post('/hapusmobil', adminController.postHapusMobil);

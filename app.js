@@ -38,6 +38,7 @@ const fileFilter = (req, file, cb) => {
 app.use(bodyParser.urlencoded({extended : false}));
 app.use(multer({storage : fileStorage, fileFilter: fileFilter}).single('images'))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, './public/image')));
 
 //Base Routing
 app.use('/', userRouter);

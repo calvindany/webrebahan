@@ -7,7 +7,7 @@
             <h3 class="my-4">Edit Paket Perjalanan</h3>
         </section>
 
-        <form class="custom-padding" method="POST" action="/admin/editmobil">
+        <form class="custom-padding mb-4" method="POST" enctype="multipart/form-data" action="/admin/editmobil">
             <div class="mb-3">
                 <label for="namamobil" class="form-label">Nama Mobil</label>
                 <input type="text" class="form-control" name="namamobil" aria-describedby="emailHelp"
@@ -33,29 +33,39 @@
                         value="<%= mobil.driver %>">
                 </div>
             </div>
+            <div class="mb-3">
+                <label for="images" class="form-label">Upload Images</label>
+                <input type="file" class="form-control" name="images">
+            </div>
 
             <input type="hidden" name="idmobil" value="<%= mobil._id %>">
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
-        <div class="custom-padding">
-            <table class="table table-md ">
-                <tr>
-                    <th class="col-8">Images</th>
-                    <th class="col-2">Action</th>
-                </tr>
-
-                <tr>
-                    <th></th>
-                    <th>
-                        <form action="#" class="custom-padding">
-                            <input type="hidden" name="idmobil" value="<%= mobil[i]._id %>">
-                            <button type="submit" class="btn"><i class="bi bi-trash fs-3" style="color: red"></i></button>
-                        </form>
-                    </th>
-                </tr>
-            </table>
-        </div>
+        <% if(mobil.image === 'null' || mobil.image == ''){ %>
+            <h1 class="custom-padding">No Image</h1>
+        <% } else { %>
+            <div class="custom-padding">
+                <table class="table table-md ">
+                    <tr>
+                        <th class="col-8">Images</th>
+                        <th class="col-2">Action</th>
+                    </tr>
+    
+                    <tr>
+                        <th>
+                            <img class="col-8" src="/<%= mobil.image %>" alt="Gagal">
+                        </th>
+                        <th class=" text-center vertical-align">
+                            <form method="POST" action="/admin/editmobil/deletegambarmobil/<%= mobil._id %>" class="custom-padding">
+                                <input type="hidden" name="idmobil" value="<%= mobil._id %>">
+                                <button type="submit" class="btn"><i class="bi bi-trash fs-3" style="color: red"></i></button>
+                            </form>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        <% } %>
 
 
         <%- include('../include/footer.ejs') %>

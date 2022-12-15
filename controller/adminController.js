@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const PaketWisata = require('../model/paket_wisata');
 const SewaMobil = require('../model/sewa_mobil');
-
+const fileHelper = require('../util/fileDelete');
 
 /* ************PAKET WISATA************ */
 
@@ -149,7 +149,11 @@ exports.postEditMobil = (req, res, next) => {
     const updatedHarga = req.body.harga;
     const updatedKapasitas = req.body.kapasitas;
     const updatedDriver = req.body.driver;
+    let image
 
+    if(req.file){
+        image = req.file.filename;
+    }
     const selectedMobilId = req.body.idmobil;
 
     SewaMobil.findOne({ _id : selectedMobilId})
@@ -158,15 +162,47 @@ exports.postEditMobil = (req, res, next) => {
         mobil.harga = updatedHarga,
         mobil.kapasitas = updatedKapasitas,
         mobil.driver = updatedDriver
+        // mobil.image = image;
 
+        if(image && (mobil.image == 'null' || mobil.image == '')){
+            mobil.image = image    
+        } else if (image && (mobil.image != 'null' || mobil.image != ' ')) {
+            fileHelper.deleteFile('public/image/' + mobil.image)
+            mobil.image = image
+        } else if (image) {
+            mobil.image = image
+        }
+        
         mobil.save();
         return res.redirect('/admin/sewamobil')
     })
 }
 
+exports.postHapusGambarMobil = (req, res, next) => {
+    const selectedMobilId = req.body.idmobil;
+
+    SewaMobil.findOne({ _id : selectedMobilId})
+    .then( mobil => {
+        if(mobil.image != null){
+            fileHelper.deleteFile('public/image/' + mobil.image)
+        }
+        mobil.image = "null";
+
+        mobil.save();
+        return res.redirect('/admin/editmobil/' + selectedMobilId);
+    })
+}
+
 exports.postHapusMobil = (req, res, next) => {
     const selectedIdMobil = req.body.idmobil;
-    SewaMobil.findByIdAndDelete(selectedIdMobil)
+
+    SewaMobil.findOne({_id : selectedIdMobil})
+    .then( mobil => {
+        if(mobil.image != null || mobil != ' '){
+            fileHelper.deleteFile('public/image/' + mobil.image)
+        }
+        return SewaMobil.findByIdAndDelete(selectedIdMobil)
+    })
     .then( result => {
         return res.redirect('/admin/sewamobil');
     })
