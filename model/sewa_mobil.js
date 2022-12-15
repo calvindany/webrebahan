@@ -3,22 +3,27 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const sewaMobil = new Schema({
-    mobil : {
-        type : String,
-        required : true
+    mobil: {
+        type: String,
+        required: true
     },
 
-    harga : {
-        type : Number,
-        required : true
+    harga: {
+        type: Number,
+        required: true
     },
 
-    kapasitas : {
-        type : String,
+    kapasitas: {
+        type: String,
+        required: true
+    },
+    driver: {
+        type: Number,
         required : true
     },
-    driver : {
-        type : Number
+    image: {
+        type : String,
+        required : true
     }
 });
 

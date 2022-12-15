@@ -7,7 +7,7 @@
             <h3 class="my-4">Tambah Paket Perjalanan</h3>
         </section>
 
-        <form class="custom-padding" method="POST" action="/admin/tambahsewamobil">
+        <form class="custom-padding" method="POST" enctype="multipart/form-data" action="/admin/tambahsewamobil">
             <div class="mb-3">
                 <label for="namamobil" class="form-label">Nama Mobil</label>
                 <input type="text" class="form-control" name="namamobil" aria-describedby="emailHelp">
@@ -29,6 +29,10 @@
                     <label class="mx-3" for="driver">Rp. </label>
                     <input type="number" class="form-control" name="driver" placeholder="Harga Driver">
                 </div>
+            </div>
+            <div class="mb-3">
+                <label for="images" class="form-label">Upload Images</label>
+                <input type="file" class="form-control" name="images">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

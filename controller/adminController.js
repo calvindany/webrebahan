@@ -111,12 +111,16 @@ exports.postTambahSewaMobil = (req, res, next) => {
     const harga = req.body.harga;
     const kapasitas = req.body.kapasitas;
     const driver = req.body.driver;
+    const image = req.file;
+
+    // conts imageArray = req.file
 
     const sewaMobil = new SewaMobil({
         mobil : namaMobil,
         harga : harga,
         kapasitas : kapasitas,
-        driver : driver
+        driver : driver,
+        image : req.file.filename
     });
 
     return sewaMobil.save()

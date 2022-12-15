@@ -1,7 +1,7 @@
-    <%- include('../include/header.ejs') %>
-        <link rel="stylesheet" href="/css/adminRoot.css">
+<%- include('../include/header.ejs') %>
+    <link rel="stylesheet" href="/css/adminRoot.css">
     </head>
-        <%- include('../include/navigation.ejs') %>
+    <%- include('../include/navigation.ejs') %>
 
         <section class="row custom-padding">
             <h3 class="my-4">Edit Paket Perjalanan</h3>
@@ -10,7 +10,8 @@
         <form class="custom-padding" method="POST" action="/admin/editmobil">
             <div class="mb-3">
                 <label for="namamobil" class="form-label">Nama Mobil</label>
-                <input type="text" class="form-control" name="namamobil" aria-describedby="emailHelp" value="<%= mobil.mobil %>">
+                <input type="text" class="form-control" name="namamobil" aria-describedby="emailHelp"
+                    value="<%= mobil.mobil %>">
             </div>
             <div class="mb-3">
                 <label for="harga" class="form-label">Harga</label>
@@ -19,7 +20,8 @@
             <div class="mb-3">
                 <label for="kapasitas" class="form-label">Kapasitas</label>
                 <div class="d-flex justify-content-start align-items-center col-3">
-                    <input type="number" class="form-control" name="kapasitas" placeholder="Kapasitas Mobil" value="<%= mobil.kapasitas %>">
+                    <input type="number" class="form-control" name="kapasitas" placeholder="Kapasitas Mobil"
+                        value="<%= mobil.kapasitas %>">
                     <label class="mx-3" for="kapasitas">Orang</label>
                 </div>
             </div>
@@ -27,13 +29,33 @@
                 <label for="driver" class="form-label">Driver</label>
                 <div class="d-flex justify-content-start align-items-center col-3">
                     <label class="mx-3" for="driver">Rp. </label>
-                    <input type="number" class="form-control" name="driver" placeholder="Harga Driver" value="<%= mobil.driver %>">
+                    <input type="number" class="form-control" name="driver" placeholder="Harga Driver"
+                        value="<%= mobil.driver %>">
                 </div>
             </div>
 
             <input type="hidden" name="idmobil" value="<%= mobil._id %>">
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <div class="custom-padding">
+            <table class="table table-md ">
+                <tr>
+                    <th class="col-8">Images</th>
+                    <th class="col-2">Action</th>
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <th>
+                        <form action="#" class="custom-padding">
+                            <input type="hidden" name="idmobil" value="<%= mobil[i]._id %>">
+                            <button type="submit" class="btn"><i class="bi bi-trash fs-3" style="color: red"></i></button>
+                        </form>
+                    </th>
+                </tr>
+            </table>
+        </div>
 
 
         <%- include('../include/footer.ejs') %>
