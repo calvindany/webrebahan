@@ -31,6 +31,21 @@
                 </div>
             </div>
             <div class="mb-3">
+                <label for="available" class="form-label">Available</label>
+                <!-- <div class="d-flex justify-content-start align-items-center col-3">
+                    <label class="mx-3" for="driver">Rp. </label>
+                    <input type="number" class="form-control" name="driver" placeholder="Harga Driver">
+                </div> -->
+                <div class="input-group mb-3">
+                    <% for(let i = 0; i < kota.length; i++) { %>
+                    <div class="input-group-text me-2">
+                        <input class="form-check-input mt-0 me-2" type="checkbox" value="<%= kota[i]._id %>" name="kota" aria-label="Checkbox for following text input">
+                        <label for="kota"><%= kota[i].namakota %></label>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="mb-3">
                 <label for="images" class="form-label">Upload Images</label>
                 <input type="file" class="form-control" name="images">
             </div>

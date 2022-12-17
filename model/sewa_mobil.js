@@ -19,12 +19,16 @@ const sewaMobil = new Schema({
     },
     driver: {
         type: Number,
-        required : true
+        required: true
     },
     image: {
-        type : String,
-        required : true
-    }
+        type: String
+    },
+    kota: [{
+        items: {
+            type: Object
+        }
+    }]
 });
 
 mongoose.pluralize(null);

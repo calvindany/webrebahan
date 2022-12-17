@@ -1,0 +1,49 @@
+<%- include('../include/header.ejs') %>
+    <link rel="stylesheet" href="/css/adminRoot.css">
+    </head>
+    <%- include('../include/navigation.ejs') %>
+
+    <section class="row custom-padding">
+        <h3 class="my-4">Tambah Kota</h3>
+    </section>
+
+    <form class="custom-padding" method="POST" enctype="multipart/form-data" action="/admin/editkota">
+        <div class="mb-3">
+            <label for="namakota" class="form-label">Nama Kota</label>
+            <input type="text" class="form-control" name="namakota" value="<%= kota.namakota %>">
+        </div>
+        <div class="mb-3">
+            <label for="images" class="form-label">Image</label>
+            <input type="file" class="form-control" name="images">
+        </div>
+
+        <input type="hidden" value="<%= kota._id %>" name="idkota">
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <% if(kota.image === 'null' || kota.image == ''){ %>
+        <h1 class="custom-padding">No Image</h1>
+    <% } else { %>
+        <div class="custom-padding">
+            <table class="table table-md ">
+                <tr>
+                    <th class="col-8">Images</th>
+                    <th class="col-2">Action</th>
+                </tr>
+
+                <tr>
+                    <th>
+                        <img class="col-8" src="/<%= kota.image %>" alt="Gagal">
+                    </th>
+                    <th class=" text-center vertical-align">
+                        <form method="POST" action="/admin/editkota/hapusgambarkota/<%= kota._id %>" class="custom-padding">
+                            <input type="hidden" name="idkota" value="<%= kota._id %>">
+                            <button type="submit" class="btn"><i class="bi bi-trash fs-3" style="color: red"></i></button>
+                        </form>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    <% } %>
+<%- include('../include/footer.ejs') %>

@@ -25,4 +25,17 @@ router.post('/editmobil', adminController.postEditMobil);
 
 router.post('/hapusmobil', adminController.postHapusMobil);
 
+
+router.get('/kota', adminController.getKota);
+
+router.get('/tambahkota', adminController.getTambahKota);
+router.post('/tambahkota', adminController.postTambahKota);
+
+router.get('/editkota/:idkota', adminController.getEditKota);
+router.post('/editkota/hapusgambarkota/:idkota', adminController.postHapusGambarKota);
+router.post('/editkota', adminController.postEditKota);
+
+router.post('/hapuskota', adminController.postHapusKota);
+
+
 module.exports = router;

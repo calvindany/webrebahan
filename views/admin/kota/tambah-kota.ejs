@@ -1,0 +1,22 @@
+<%- include('../include/header.ejs') %>
+    <link rel="stylesheet" href="/css/adminRoot.css">
+    </head>
+    <%- include('../include/navigation.ejs') %>
+
+        <section class="row custom-padding">
+            <h3 class="my-4">Tambah Kota</h3>
+        </section>
+
+        <form class="custom-padding" method="POST" enctype="multipart/form-data" action="/admin/tambahkota">
+            <div class="mb-3">
+                <label for="namakota" class="form-label">Nama Kota</label>
+                <input type="text" class="form-control" name="namakota">
+            </div>
+            <div class="mb-3">
+                <label for="images" class="form-label">Image</label>
+                <input type="file" class="form-control" name="images">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+<%- include('../include/footer.ejs') %>
