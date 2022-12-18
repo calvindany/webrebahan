@@ -5,6 +5,9 @@ const router = express.Router();
 
 router.get('/', adminController.getPaketWisata);
 
+router.get('/login', adminController.getLogin);
+router.post('/login', adminController.postLogin);
+
 router.get('/tambahpaketwisata', adminController.getTambahPaketWisata);
 router.post('/tambahpaketwisata', adminController.postTambahPaketWisata);
 

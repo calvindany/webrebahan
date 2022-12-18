@@ -8,8 +8,7 @@ const SewaMobil = require('../model/sewa_mobil');
 const Kota = require('../model/kota');
 const fileHelper = require('../util/fileDelete');
 const Artikel = require('../model/artikel');
-const artikel = require('../model/artikel');
-const { update } = require('../model/paket_wisata');
+const Admin = require('../model/admin');
 
 /* ************PAKET WISATA************ */
 
@@ -455,3 +454,28 @@ exports.postHapusGambarArtikel = (req, res, next) => {
 }
 
 /* ************ AKHIR ARTIKEL ************ */
+
+
+/* ************ MULAI AUTH ************ */
+
+exports.getLogin = (req, res, next) => {
+    res.render('admin/login');
+}
+
+exports.postLogin = (req, res, next) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    Admin.findOne({username : username})
+    .then( admin => {
+        if(!user || password != admin.password){
+            console.log('Wrong username and password');
+            return res.redirect('/admin/login');
+        } else {
+            console.log('Login Successful');
+            return res.redirect('/');
+        }
+    })
+}
+
+/* ************ AKHIR AUTH ************ */

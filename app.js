@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const userRouter = require('./routes/userRoutes');
 const adminRouter = require('./routes/adminRoutes');
 
+const Admin = require('./model/admin');
+
 const app = express();
 
 const MONGODB_URI = 'mongodb://localhost:27017/webrebahan';
@@ -50,7 +52,18 @@ app.use('/admin', adminRouter);
 monggose.connect(MONGODB_URI)
 .then( result => {
     console.log("Connected")
-    app.listen(3000);
+
+    Admin.find()
+    .then( admin => {
+        if(admin.length < 1){
+            const admin = new Admin({
+                email : 'calvin@email.com',
+                password : '1234'
+            })
+            admin.save();
+        }
+        app.listen(3000);
+    })
 })
 .catch(err => {
     console.log(err);
