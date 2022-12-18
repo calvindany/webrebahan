@@ -38,4 +38,12 @@ router.post('/editkota', adminController.postEditKota);
 router.post('/hapuskota', adminController.postHapusKota);
 
 
+router.get('/artikel', adminController.getArtikel);
+router.get('/tambahartikel', adminController.getTambahArtikel);
+router.post('/tambahartikel', adminController.postTambahArtikel);
+router.get('/editartikel/:artikelid', adminController.getEditArtikel);
+router.post('/editartikel', adminController.postEditArtikel);
+router.post('/editartikel/hapusgambarartikel/:idartikel', adminController.postHapusGambarArtikel);
+
+
 module.exports = router;

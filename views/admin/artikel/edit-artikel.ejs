@@ -1,0 +1,56 @@
+<%- include('../include/header.ejs') %>
+    <link rel="stylesheet" href="/css/adminRoot.css">
+    </head>
+    <%- include('../include/navigation.ejs') %>
+
+        <section class="row custom-padding">
+            <h3 class="my-4">Edit Artikel</h3>
+        </section>
+
+        <form class="custom-padding mb-4" method="POST" enctype="multipart/form-data" action="/admin/editartikel">
+            <div class="mb-3">
+                <label for="judul" class="form-label">Judul Artikel</label>
+                <input type="text" class="form-control" name="judul" value="<%= artikel.judul %>">
+            </div>
+            <div class="mb-3">
+                <label for="images" class="form-label">Image</label>
+                <input type="file" class="form-control" name="images" >
+            </div>
+            <div class="mb-3">
+                <label for="artikel" class="form-label">Artikel</label>
+                <div class="input-group">
+                    <!-- <span class="input-group-text">With textarea</span> -->
+                    <textarea class="form-control" aria-label="With textarea" style="height: 300px;" name="artikel"><%= artikel.text %></textarea>
+                </div>
+            </div>
+
+            <input type="hidden" value="<%= artikel._id %>" name="artikelid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <% if(artikel.image === 'null' || artikel.image == ''){ %>
+            <h1 class="custom-padding">No Image</h1>
+        <% } else { %>
+            <div class="custom-padding">
+                <table class="table table-md ">
+                    <tr>
+                        <th class="col-8">Images</th>
+                        <th class="col-2">Action</th>
+                    </tr>
+    
+                    <tr>
+                        <th>
+                            <img class="col-8" src="/<%= artikel.image %>" alt="Gagal">
+                        </th>
+                        <th class=" text-center vertical-align">
+                            <form method="POST" action="/admin/editartikel/hapusgambarartikel/<%= artikel._id %>" class="custom-padding">
+                                <input type="hidden" name="idartikel" value="<%= artikel._id %>">
+                                <button type="submit" class="btn"><i class="bi bi-trash fs-3" style="color: red"></i></button>
+                            </form>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        <% } %>
+
+<%- include('../include/footer.ejs') %>

@@ -1,0 +1,36 @@
+<%- include('../include/header.ejs') %>
+<link rel="stylesheet" href="/css/adminRoot.css">
+</head>
+
+<body>
+<%- include('../include/navigation.ejs') %>
+<section class="row custom-padding">
+    <h3 class="my-4">Artikel</h3>
+</section>
+
+<section class="row d-flex justify-content-end custom-padding mb-4">
+    <a type="button" class="btn btn-primary col-1" href="/admin/tambahartikel">Tambah</a>
+</section>
+
+<section class="custom-padding">
+    <table class="table table-md">
+        <tr>
+            <th class="col-xl-4">Judul Artikel</th>
+            <th class="col-xl-2 text-center">Action</th>
+        </tr>
+
+        <% for(let i = 0; i < artikel.length; i++){ %>
+            <tr>
+                <td><%= artikel[i].judul %></td>
+                <td class="d-flex justify-content-center">
+                    <a href="/admin/editartikel/<%= artikel[i]._id %>" class="btn"><i class="bi bi-pencil-square fs-3" style="color: blue;"></i></a>
+                    <form action="/admin/hapusartikel" method="POST" >
+                        <input type="hidden" name="idartikel" value="<%= artikel[i]._id %>">
+                        <button type="submit" class="btn"><i class="bi bi-trash fs-3" style="color: red"></i></button>
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+</section>
+<%- include('../include/footer.ejs') %>

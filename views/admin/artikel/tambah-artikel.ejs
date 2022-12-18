@@ -1,0 +1,29 @@
+<%- include('../include/header.ejs') %>
+    <link rel="stylesheet" href="/css/adminRoot.css">
+    </head>
+    <%- include('../include/navigation.ejs') %>
+
+        <section class="row custom-padding">
+            <h3 class="my-4">Tambah Artikel</h3>
+        </section>
+
+        <form class="custom-padding" method="POST" enctype="multipart/form-data" action="/admin/tambahartikel">
+            <div class="mb-3">
+                <label for="judul" class="form-label">Judul Artikel</label>
+                <input type="text" class="form-control" name="judul">
+            </div>
+            <div class="mb-3">
+                <label for="images" class="form-label">Image</label>
+                <input type="file" class="form-control" name="images">
+            </div>
+            <div class="mb-3">
+                <label for="artikel" class="form-label">Artikel</label>
+                <div class="input-group">
+                    <!-- <span class="input-group-text">With textarea</span> -->
+                    <textarea class="form-control" aria-label="With textarea" style="height: 300px;" name="artikel"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+<%- include('../include/footer.ejs') %>

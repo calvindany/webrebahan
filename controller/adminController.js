@@ -7,7 +7,9 @@ const PaketWisata = require('../model/paket_wisata');
 const SewaMobil = require('../model/sewa_mobil');
 const Kota = require('../model/kota');
 const fileHelper = require('../util/fileDelete');
-const kota = require('../model/kota');
+const Artikel = require('../model/artikel');
+const artikel = require('../model/artikel');
+const { update } = require('../model/paket_wisata');
 
 /* ************PAKET WISATA************ */
 
@@ -110,11 +112,11 @@ exports.getSewaMobil = (req, res, next) => {
 
 exports.getTambahSewaMobil = (req, res, next) => {
     Kota.find()
-    .then( kota => {
-        res.render('admin/sewamobil/tambah-mobil', {
-            kota : kota
-        });
-    })
+        .then(kota => {
+            res.render('admin/sewamobil/tambah-mobil', {
+                kota: kota
+            });
+        })
 }
 
 exports.postTambahSewaMobil = (req, res, next) => {
@@ -126,7 +128,7 @@ exports.postTambahSewaMobil = (req, res, next) => {
     let image
     let availableKota = [];
 
-    if(req.file){
+    if (req.file) {
         image = req.file.filename
     } else {
         image = 'null'
@@ -134,8 +136,8 @@ exports.postTambahSewaMobil = (req, res, next) => {
 
 
     //Extract kota arrat from body to array stucture like model
-    for(let i = 0; i < kota.length; i++){
-        availableKota.push({items : new mongodb.ObjectId(kota[i])})
+    for (let i = 0; i < kota.length; i++) {
+        availableKota.push({ items: new mongodb.ObjectId(kota[i]) })
     }
 
     const sewaMobil = new SewaMobil({
@@ -144,7 +146,7 @@ exports.postTambahSewaMobil = (req, res, next) => {
         kapasitas: kapasitas,
         driver: driver,
         image: image,
-        kota : availableKota
+        kota: availableKota
     });
 
     return sewaMobil.save()
@@ -256,8 +258,8 @@ exports.postTambahKota = (req, res, next) => {
     const namaKota = req.body.namakota;
 
     let image
-    
-    if(req.file){
+
+    if (req.file) {
         image = req.file.filename;
     } else {
         image = 'null'
@@ -304,7 +306,7 @@ exports.postEditKota = (req, res, next) => {
             if (fs.existsSync('public/image/' + kota.image)) {
                 fileHelper.deleteFile('public/image/' + kota.image)
                 kota.image = image;
-            } else if(image) {
+            } else if (image) {
                 kota.image = image;
             } else {
                 kota.image = 'null';
@@ -334,15 +336,122 @@ exports.postHapusGambarKota = (req, res, next) => {
 exports.postHapusKota = (req, res, next) => {
     const selectedIdKota = req.body.idkota;
 
-    Kota.findOneAndDelete({_id : selectedIdKota})
-    .then(result => {
-        if (fs.existsSync('public/image/' + kota.image)) {
-            fileHelper.deleteFile('public/image/' + kota.image)
-        }
-        console.log('Data Deleted');
+    Kota.findOneAndDelete({ _id: selectedIdKota })
+        .then(result => {
+            if (fs.existsSync('public/image/' + kota.image)) {
+                fileHelper.deleteFile('public/image/' + kota.image)
+            }
+            console.log('Data Deleted');
 
-        return res.redirect('/admin/kota')
-    })
+            return res.redirect('/admin/kota')
+        })
 }
 
 /* ************ AKHIR KOTA ************ */
+
+
+/* ************ MULAI ARTIKEL ************ */
+
+exports.getArtikel = (req, res, next) => {
+    Artikel.find()
+        .then(artikel => {
+            res.render('admin/artikel/artikel', {
+                artikel: artikel
+            });
+        })
+}
+
+
+exports.getTambahArtikel = (req, res, next) => {
+    res.render('admin/artikel/tambah-artikel')
+}
+
+exports.postTambahArtikel = (req, res, next) => {
+
+    const judul = req.body.judul;
+    const textArtikel = req.body.artikel;
+
+    let image
+
+    if (req.file) {
+        image = req.file.filename;
+    } else {
+        image = 'null'
+    }
+
+    const artikel = new Artikel({
+        judul: judul,
+        text : textArtikel,
+        image: image
+    })
+
+    return artikel.save()
+        .then(result => {
+            console.log('Data Artikel Terinput')
+            res.redirect('/admin/artikel')
+        })
+}
+
+exports.getEditArtikel = (req, res, next) => {
+    const selectedIdArtikel = req.params.artikelid;
+
+    Artikel.findOne({_id : selectedIdArtikel})
+    .then( artikel => {
+        res.render('admin/artikel/edit-artikel', {
+            artikel : artikel
+        })
+    })
+}
+
+
+exports.postEditArtikel = (req, res, next) => {
+    const selectedIdArtikel = req.body.artikelid;
+
+    const updatedJudul = req.body.judul;
+    const updatedTextArtikel = req.body.artikel;
+    let image
+
+    if(req.file){
+        image = req.file.filename;
+    }
+
+
+    Artikel.findOne({_id : selectedIdArtikel})
+    .then( artikel => {
+        if (fs.existsSync('public/image/' + artikel.image)) {
+            fileHelper.deleteFile('public/image/' + artikel.image)
+            artikel.image = image;
+        } else if (image) {
+            artikel.image = image;
+        } else {
+            artikel.image = 'null';
+        }
+
+        artikel.judul = updatedJudul;
+        artikel.text = updatedTextArtikel;
+
+        artikel.save();
+        return res.redirect('/admin/artikel');
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
+exports.postHapusGambarArtikel = (req, res, next) => {
+    const selectedIdArtikel = req.params.idartikel;
+
+    Artikel.findOne({ _id: selectedIdArtikel })
+        .then(artikel => {
+            if (fs.existsSync('public/image/' + artikel.image)) {
+                fileHelper.deleteFile('public/image/' + artikel.image)
+            }
+
+            artikel.image = "null";
+
+            artikel.save();
+            return res.redirect('/admin/editartikel/' + selectedIdArtikel);
+        })
+}
+
+/* ************ AKHIR ARTIKEL ************ */
