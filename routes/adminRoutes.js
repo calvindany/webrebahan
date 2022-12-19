@@ -1,52 +1,54 @@
 const express = require('express');
 const adminController = require('../controller/adminController.js');
+const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-router.get('/', adminController.getPaketWisata);
-
 router.get('/login', adminController.getLogin);
 router.post('/login', adminController.postLogin);
+router.get('/logout', adminController.getLogout);
 
-router.get('/tambahpaketwisata', adminController.getTambahPaketWisata);
-router.post('/tambahpaketwisata', adminController.postTambahPaketWisata);
+router.get('/', isAuth.isAuthorized, adminController.getPaketWisata);
 
-router.get('/editpaketwisata/:idpaketwisata', adminController.getEditPaketWisata);
-router.post('/editpaketwisata', adminController.postEditPaketWisata);
+router.get('/tambahpaketwisata', isAuth.isAuthorized, adminController.getTambahPaketWisata);
+router.post('/tambahpaketwisata', isAuth.isAuthorized, adminController.postTambahPaketWisata);
 
-router.post('/hapuspaketwisata', adminController.postHapusPaketWisata);
+router.get('/editpaketwisata/:idpaketwisata', isAuth.isAuthorized, adminController.getEditPaketWisata);
+router.post('/editpaketwisata', isAuth.isAuthorized, adminController.postEditPaketWisata);
 
-
-router.get('/sewamobil', adminController.getSewaMobil);
-
-router.get('/tambahsewamobil', adminController.getTambahSewaMobil);
-router.post('/tambahsewamobil', adminController.postTambahSewaMobil);
-
-router.get('/editmobil/:idmobil', adminController.getEditMobil);
-router.post('/editmobil/deletegambarmobil/:idmobil', adminController.postHapusGambarMobil);
-router.post('/editmobil', adminController.postEditMobil);
-
-router.post('/hapusmobil', adminController.postHapusMobil);
+router.post('/hapuspaketwisata', isAuth.isAuthorized, adminController.postHapusPaketWisata);
 
 
-router.get('/kota', adminController.getKota);
+router.get('/sewamobil', isAuth.isAuthorized, adminController.getSewaMobil);
 
-router.get('/tambahkota', adminController.getTambahKota);
-router.post('/tambahkota', adminController.postTambahKota);
+router.get('/tambahsewamobil', isAuth.isAuthorized, adminController.getTambahSewaMobil);
+router.post('/tambahsewamobil', isAuth.isAuthorized, adminController.postTambahSewaMobil);
 
-router.get('/editkota/:idkota', adminController.getEditKota);
-router.post('/editkota/hapusgambarkota/:idkota', adminController.postHapusGambarKota);
-router.post('/editkota', adminController.postEditKota);
+router.get('/editmobil/:idmobil', isAuth.isAuthorized, adminController.getEditMobil);
+router.post('/editmobil/deletegambarmobil/:idmobil', isAuth.isAuthorized, adminController.postHapusGambarMobil);
+router.post('/editmobil', isAuth.isAuthorized, adminController.postEditMobil);
 
-router.post('/hapuskota', adminController.postHapusKota);
+router.post('/hapusmobil', isAuth.isAuthorized, adminController.postHapusMobil);
 
 
-router.get('/artikel', adminController.getArtikel);
-router.get('/tambahartikel', adminController.getTambahArtikel);
-router.post('/tambahartikel', adminController.postTambahArtikel);
-router.get('/editartikel/:artikelid', adminController.getEditArtikel);
-router.post('/editartikel', adminController.postEditArtikel);
-router.post('/editartikel/hapusgambarartikel/:idartikel', adminController.postHapusGambarArtikel);
+router.get('/kota', isAuth.isAuthorized, adminController.getKota);
+
+router.get('/tambahkota', isAuth.isAuthorized, adminController.getTambahKota);
+router.post('/tambahkota', isAuth.isAuthorized, adminController.postTambahKota);
+
+router.get('/editkota/:idkota', isAuth.isAuthorized, adminController.getEditKota);
+router.post('/editkota/hapusgambarkota/:idkota', isAuth.isAuthorized, adminController.postHapusGambarKota);
+router.post('/editkota', isAuth.isAuthorized, adminController.postEditKota);
+
+router.post('/hapuskota', isAuth.isAuthorized, adminController.postHapusKota);
+
+
+router.get('/artikel', isAuth.isAuthorized, adminController.getArtikel);
+router.get('/tambahartikel', isAuth.isAuthorized, adminController.getTambahArtikel);
+router.post('/tambahartikel', isAuth.isAuthorized, adminController.postTambahArtikel);
+router.get('/editartikel/:artikelid', isAuth.isAuthorized, adminController.getEditArtikel);
+router.post('/editartikel', isAuth.isAuthorized, adminController.postEditArtikel);
+router.post('/editartikel/hapusgambarartikel/:idartikel',  isAuth.isAuthorized, adminController.postHapusGambarArtikel);
 
 
 module.exports = router;

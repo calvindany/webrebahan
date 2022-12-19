@@ -9,6 +9,7 @@ const Kota = require('../model/kota');
 const fileHelper = require('../util/fileDelete');
 const Artikel = require('../model/artikel');
 const Admin = require('../model/admin');
+const { runInNewContext } = require('vm');
 
 /* ************PAKET WISATA************ */
 
@@ -16,7 +17,8 @@ exports.getPaketWisata = (req, res, next) => {
     PaketWisata.find()
         .then((paket) => {
             return res.render('admin/paketwisata/paket-wisata', {
-                paket: paket
+                paket: paket,
+                isAuth : req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -25,7 +27,9 @@ exports.getPaketWisata = (req, res, next) => {
 };
 
 exports.getTambahPaketWisata = (req, res, next) => {
-    return res.render('admin/paketwisata/tambah-paket')
+    return res.render('admin/paketwisata/tambah-paket', {
+        isAuth : req.session.isLoggedIn
+    })
 }
 
 exports.postTambahPaketWisata = (req, res, next) => {
@@ -55,7 +59,8 @@ exports.getEditPaketWisata = (req, res, next) => {
     PaketWisata.findById({ _id: selectedPaketWisataId })
         .then(paketwisata => {
             res.render('admin/paketwisata/edit-paket', {
-                paketData: paketwisata
+                paketData: paketwisata,
+                isAuth : req.session.isLoggedIn
             })
             console.log(paketwisata);
         })
@@ -101,7 +106,8 @@ exports.getSewaMobil = (req, res, next) => {
     SewaMobil.find()
         .then((mobil) => {
             return res.render('admin/sewamobil/sewa-mobil', {
-                mobil: mobil
+                mobil: mobil,
+                isAuth : req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -113,7 +119,8 @@ exports.getTambahSewaMobil = (req, res, next) => {
     Kota.find()
         .then(kota => {
             res.render('admin/sewamobil/tambah-mobil', {
-                kota: kota
+                kota: kota,
+                isAuth : req.session.isLoggedIn
             });
         })
 }
@@ -164,7 +171,8 @@ exports.getEditMobil = (req, res, next) => {
     return SewaMobil.findOne({ _id: selectedMobilId })
         .then(mobil => {
             res.render('admin/sewamobil/edit-mobil', {
-                mobil: mobil
+                mobil: mobil,
+                isAuth : req.session.isLoggedIn
             })
         })
 }
@@ -244,13 +252,16 @@ exports.getKota = (req, res, next) => {
     Kota.find()
         .then(kota => {
             res.render('admin/kota/kota', {
-                kota: kota
+                kota: kota,
+                isAuth : req.session.isLoggedIn
             })
         })
 }
 
 exports.getTambahKota = (req, res, next) => {
-    res.render('admin/kota/tambah-kota');
+    res.render('admin/kota/tambah-kota', {
+        isAuth : req.session.isLoggedIn
+    });
 }
 
 exports.postTambahKota = (req, res, next) => {
@@ -283,7 +294,8 @@ exports.getEditKota = (req, res, next) => {
         .then(kota => {
             // console.log(kota)
             res.render('admin/kota/edit-kota', {
-                kota: kota
+                kota: kota,
+                isAuth : req.session.isLoggedIn
             })
         })
 }
@@ -355,14 +367,17 @@ exports.getArtikel = (req, res, next) => {
     Artikel.find()
         .then(artikel => {
             res.render('admin/artikel/artikel', {
-                artikel: artikel
+                artikel: artikel,
+                isAuth : req.session.isLoggedIn
             });
         })
 }
 
 
 exports.getTambahArtikel = (req, res, next) => {
-    res.render('admin/artikel/tambah-artikel')
+    res.render('admin/artikel/tambah-artikel', {
+        isAuth : req.session.isLoggedIn
+    })
 }
 
 exports.postTambahArtikel = (req, res, next) => {
@@ -397,7 +412,8 @@ exports.getEditArtikel = (req, res, next) => {
     Artikel.findOne({_id : selectedIdArtikel})
     .then( artikel => {
         res.render('admin/artikel/edit-artikel', {
-            artikel : artikel
+            artikel : artikel,
+            isAuth : req.session.isLoggedIn
         })
     })
 }
@@ -459,7 +475,9 @@ exports.postHapusGambarArtikel = (req, res, next) => {
 /* ************ MULAI AUTH ************ */
 
 exports.getLogin = (req, res, next) => {
-    res.render('admin/login');
+    res.render('admin/login', {
+        isAuth : req.session.isLoggedIn
+    });
 }
 
 exports.postLogin = (req, res, next) => {
@@ -468,14 +486,31 @@ exports.postLogin = (req, res, next) => {
 
     Admin.findOne({username : username})
     .then( admin => {
-        if(!user || password != admin.password){
+        if(admin || password == admin.password){
+            req.session.isLoggedIn = true;
+            req.session.admin = admin;
+            
+            console.log('Login Successful');
+            return req.session.save( err => {
+                if(err) {
+                    console.log(err)
+                }
+                res.redirect('/admin/');
+            });
+        } else {
             console.log('Wrong username and password');
             return res.redirect('/admin/login');
-        } else {
-            console.log('Login Successful');
-            return res.redirect('/');
         }
+
     })
+}
+
+
+exports.getLogout = (req, res, next) => {
+    req.session.destroy( (err) => {
+        console.log(err);
+    });
+    res.redirect('/admin');
 }
 
 /* ************ AKHIR AUTH ************ */

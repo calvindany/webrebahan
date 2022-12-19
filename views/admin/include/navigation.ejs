@@ -7,11 +7,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/admin/">Paket Tour</a>
-                <a class="nav-link" href="/admin/sewamobil">Sewa Mobil</a>
-                <a class="nav-link" href="/admin/kota">Kota</a>
-                <a class="nav-link" href="/admin/artikel">Article</a>
-                <a class="nav-link disabled" href="#">Logout</a>
+                <!-- <h1> <%= isAuth %> </h1> -->
+                <% if(isAuth){ %>
+                    <a class="nav-link active" aria-current="page" href="/admin/">Paket Tour</a>
+                    <a class="nav-link" href="/admin/sewamobil">Sewa Mobil</a>
+                    <a class="nav-link" href="/admin/kota">Kota</a>
+                    <a class="nav-link" href="/admin/artikel">Article</a>
+                    <a class="nav-link" href="/admin/logout">Logout</a>
+                <% } %>
             </div>
         </div>
     </div>

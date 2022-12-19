@@ -2,16 +2,24 @@ const express = require('express');
 const path = require('path');
 const monggose = require('mongoose');
 const multer = require('multer');
-
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const bodyParser = require('body-parser');
+
+
 const userRouter = require('./routes/userRoutes');
 const adminRouter = require('./routes/adminRoutes');
 
-const Admin = require('./model/admin');
+const Admin = require('./model/admin')
 
 const app = express();
 
 const MONGODB_URI = 'mongodb://localhost:27017/webrebahan';
+
+const store = new MongoDBStore({
+    uri : MONGODB_URI,
+    collection : 'adminSession'
+});
 
 //App Configuration
 app.set('view engine', 'ejs');
@@ -23,7 +31,6 @@ const fileStorage = multer.diskStorage({
         cb(null, "./public/image")
     },
     filename: (req, file, cb) => {
-        // console.log(file);
         cb(null, Date.now() + path.extname(file.originalname))
     }
 });
@@ -41,6 +48,12 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use(multer({storage : fileStorage, fileFilter: fileFilter}).single('images'))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/public/image')));
+app.use(session({
+    secret : 'Session Secret',
+    resave : 'false',
+    saveUninitialized : false,
+    store : store
+}))
 
 //Base Routing
 app.use('/', userRouter);
@@ -55,13 +68,13 @@ monggose.connect(MONGODB_URI)
 
     Admin.find()
     .then( admin => {
-        if(admin.length < 1){
-            const admin = new Admin({
-                email : 'calvin@email.com',
-                password : '1234'
-            })
-            admin.save();
-        }
+        // if(admin.length < 1){
+        //     const admin = new Admin({
+        //         email : 'calvin@email.com',
+        //         password : '1234'
+        //     })
+        //     admin.save();
+        // }
         app.listen(3000);
     })
 })
